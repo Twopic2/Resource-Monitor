@@ -9,10 +9,7 @@ public class Skeleton {
 
     public static void main(String[] args) {
 
-
         while (true) {
-
-
 
             resource.Disk();
             resource.Memory();
