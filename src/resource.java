@@ -12,8 +12,6 @@ import java.util.List;
 
 public class resource {
 
-
-
     public static File file = new File("/"); // UNIX
     public static File file2 = new File("C:"); // Windows
     public static MemoryMXBean memory = ManagementFactory.getMemoryMXBean();
@@ -93,9 +91,7 @@ public class resource {
     }
 
     public static void Thread() {
-
        System.out.println(String.format("Thread Count: %d",Threadcount + 1));
-
        System.out.println(String.format("Daemon Thread Count: %d",thread2.getDaemonThreadCount()));
 
     }

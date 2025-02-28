@@ -8,29 +8,45 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import static src.resource.Disk;
+public class GUI implements ActionListener {
 
-public class GUI extends JFrame{
+    JButton button = new JButton("MacInfo");
+    JButton button2 = new JButton("LinuxInfo");
+    JButton button3 = new JButton("WindowsInfo");
+
+    static JFrame frame = new JFrame("Resource Monitor");
+    static JLabel l1 = new JLabel();
+
+    GUI() {
+
+        button.setBounds(100, 600, 150, 100);
+        button.setFocusable(false);
+        button.setVisible(true);
+        button.addActionListener(this);
+        frame.add(button);
+    }
 
 
-
-    public static void box() {
+    public static void box() throws IOException {
         JPanel redpanel = new JPanel();
         JPanel Disk = new JPanel();
         JPanel memp = new JPanel();
         JPanel thrds = new JPanel();
 
+
         redpanel.setBackground(Color.red);
         redpanel.setBounds(0, 0, 1000, 100);
-        Disk.setBounds(300, 150, 350, 100);
-        memp.setBounds(300, 300, 350, 200);
-        thrds.setBounds(300, 600, 350, 50);
+        Disk.setBounds(300, 105, 350, 100);
+        memp.setBounds(300, 220, 350, 200);
+        thrds.setBounds(300, 435, 350, 50);
 
 
         ArrayList<String> thread2String= resource.Thread2String();
         ArrayList<String> diskstring2 = resource.Disk2String();
         ArrayList<String> mem = resource.Memory2String();
 
+
+        // Lists Information shit
         for (int i = 0; i < diskstring2.size(); i++) {
             Disk.add(new JLabel(diskstring2.get(i)));
         }
@@ -41,21 +57,17 @@ public class GUI extends JFrame{
             thrds.add(new JLabel(thread2String.get(i)));
         }
 
-
-        JFrame frame = new JFrame("Resource Monitor");
-        JLabel l1 = new JLabel();
-
         redpanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         Disk.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Disk Usage"));
         memp.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Memory Usage"));
         thrds.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Thread Usage"));
 
-        l1.setText("Welcome to Resource Monitor");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        l1.setText("Welcome to Resource Monitor");
         l1.setHorizontalAlignment(JLabel.CENTER);
         l1.setVerticalAlignment(JLabel.NORTH);
         l1.setFont(new Font("Arial", Font.BOLD, 40));
+
 
         frame.add(thrds);
         frame.add(memp);
@@ -68,14 +80,33 @@ public class GUI extends JFrame{
         frame.setVisible(true);
         frame.add(redpanel);
         redpanel.add(l1);
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
-    public static void main(String[] args) {
-
-
+    public static void main(String[] args) throws IOException {
         box();
+        new GUI();
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if(e.getSource()==button) {
+            frame.dispose();
+            try {
+                new MacTab();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        } else if (e.getSource()==button2) {
+            frame.dispose();
+            new Linux();
+        } else if (e.getSource()==button3) {
+            frame.dispose();
+        }
 
 
     }
